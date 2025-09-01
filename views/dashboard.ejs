@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/public/styles.css">
+</head>
+<body>
+<div class="container">
+    <div style="margin-bottom: 1em;">
+        <form action="/" method="get" style="display:inline;">
+            <button type="submit">Go to Dashboard</button>
+        </form>
+    </div>
+    <div style="margin-bottom: 1em;">
+        <form action="/user/logout" method="post" style="display:inline; float:right;">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+    <div>
+        <h1>Dashboard</h1>
+        <% if (typeof cgpa !== 'undefined' && cgpa !== null) { %>
+            <h2>Your CGPA: <%= cgpa %></h2>
+        <% } %>
+        <% if (!locals.semesterCount) { %>
+        <form action="/dashboard/semester" method="post">
+            <label>Enter Semester Count</label>
+            <input type="number" name="semesterCount" placeholder="8">
+            <button>Submit</button>
+        </form>
+        <% } %>
+        <% if (locals.semesterCount) { %>
+            <form action="/dashboard/semester" method="post" style="margin-bottom:1em;">
+                <label>Update Semester Count</label>
+                <input type="number" name="semesterCount" value="<%= semesterCount %>" min="1" required>
+                <button type="submit">Update</button>
+            </form>
+            <div>
+            <% for( let index = 0; index < locals.semesterCount ; index++ ) { %>
+                <div>
+                   <form action="/dashboard/semester/<%= index+1 %>" method="get">
+                        <input type="hidden" name="semester" value="<%= index+1 %>">
+                        <h3>Semester <%= index+1 %></h3>
+                        <button>Enter</button>
+                   </form>
+                </div>
+            <% } %>
+            </div> 
+        <% } %>
+    </div>
+</div>
+</body>
+</html>

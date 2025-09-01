@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="stylesheet" href="/public/styles.css">
+</head>
+<body>
+<div class="container">
+    <h1>Login</h1>
+    <form action="/user/login" method="post">
+        <label for="">Email</label>
+        <input type="text" required name="email" placeholder="johndoe@abc.com">
+        <label for="">Password</label>
+        <input type="text" required name="password" placeholder="password">
+        <button type="submit">Login</button>
+    </form>
+    <div style="margin-bottom: 1em; text-align:center;">
+        <form action="/signup" method="get" style="display:inline;">
+            <button type="submit">Signup</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

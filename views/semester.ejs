@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semester <%= semester %></title>
+    <link rel="stylesheet" href="/public/styles.css">
+</head>
+<body>
+<div class="container">
+    <div style="margin-bottom: 1em;">
+        <form action="/" method="get" style="display:inline;">
+            <button type="submit">Go to Dashboard</button>
+        </form>
+    </div>
+    <div style="margin-bottom: 1em;">
+        <form action="/user/logout" method="post" style="display:inline; float:right;">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+    <h1>Semester <%= semester %></h1>
+    <% if (subjects && subjects.length > 0) { %>
+        <h2>Subjects for Semester <%= semester %></h2>
+        <table border="1" cellpadding="5" cellspacing="0">
+            <tr>
+                <th>Subject</th>
+                <th>Grade</th>
+                <th>Credit</th>
+                <th>Edit</th>
+            </tr>
+            <% subjects.forEach(function(subj) { %>
+                <tr>
+                    <form action="/dashboard/subject-update" method="post" style="display:inline;">
+                        <td>
+                            <input type="hidden" name="subjectId" value="<%= subj._id %>">
+                            <input type="text" name="Subject" value="<%= subj.Subject %>" required>
+                        </td>
+                        <td><input type="text" name="Grade" value="<%= subj.Grade %>" required></td>
+                        <td><input type="number" name="Credit" value="<%= subj.Credit %>" required></td>
+                        <td><button type="submit">Update</button></td>
+                    </form>
+                </tr>
+            <% }); %>
+        </table>
+    <% } %>
+    <% if (numberOfSubjects) { %>
+        <form action="/dashboard/subject-count" method="post" style="margin-bottom:1em;">
+            <input type="hidden" name="semester" value="<%= semester %>">
+            <label>Update Number of Subjects</label>
+            <input type="number" name="numberOfSubjects" value="<%= numberOfSubjects %>" min="1" required>
+            <button type="submit">Update</button>
+        </form>
+    <% } %>
+    <% if (locals.showNumberOfSubjectsForm===true) { %>
+        <form action="/dashboard/subject-count" method="post">
+            <input type="hidden" name="semester" value="<%= semester %>">
+            <label>Enter Number of Subjects for Semester <%= semester %></label>
+            <input type="number" name="numberOfSubjects" placeholder="1">
+            <button>Submit</button>
+        </form>
+    <% } %>
+    <% if (locals.subjectsSubmitted===false) { %>
+        <form action="/dashboard/subjects" method="post">
+        <input type="hidden" name="semester" value="<%= semester  %>">
+        <input type="hidden" name="numberOfSubjects" value="<%= numberOfSubjects %>">
+        <% for( let index = 0; index < locals.numberOfSubjects; index++ ) { %>
+            <div>
+                <label>Subject</label>
+                <input type="text" name="subject<%= index+1 %>">
+                <label>Grade</label>
+                <input type="text" name="grade<%= index+1 %>">
+                <label>Credit</label>
+                <input type="number" name="credit<%= index+1 %>">
+            </div>
+        <% } %>
+        <button>Submit</button>
+    </form>
+    <% } %>
+<% if (subjectsSubmitted === true ) { %>
+    <script>
+        // Calculate GPA in the browser
+        const subjects = <%- JSON.stringify(subjects) %>;
+        let totalPoints = 0;
+        let totalCredits = 0;
+        // You must define a grade-to-point mapping
+        const gradeMap = { 'S': 10, 'A': 9, 'B': 8, 'C': 7, 'D': 6, 'E':5, 'F':0 };
+        subjects.forEach(subj => {
+            const points = gradeMap[subj.Grade] || 0;
+            totalPoints += points * subj.Credit;
+            totalCredits += subj.Credit;
+        });
+        const gpa = totalCredits ? (totalPoints / totalCredits).toFixed(2) : 0;
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('gpa-value').textContent = gpa;
+            document.getElementById('gpa-input').value = gpa;
+            document.getElementById('semesterCredit').value = totalCredits;
+        });
+    </script>
+    <h3>Your GPA for Semester <%= semester %>: <span id="gpa-value"></span></h3>
+    <form action="/dashboard/semester/gpa" method="post">
+        <input type="hidden" name="semester" value="<%= semester %>">
+        <input type="hidden" name="Gpa" id="gpa-input" value="">
+        <input type="hidden" name="semesterCredit" id="semesterCredit" value="">
+        <button type="submit">Save GPA</button>
+    </form>
+<% } %>
+</div>
+</body>
+</html>
