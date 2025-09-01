@@ -9,7 +9,7 @@ const dashboardRoute = require("./routes/dashboard");
 const userRoute = require("./routes/user");
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 10000;
 
 connectToMongoDB(process.env.MONGODB_URI)
 .then(() => console.log("MongoDB connected"))
@@ -26,4 +26,4 @@ app.use("/",checkAuth,staticRoute);
 app.use("/user",userRoute);
 app.use("/dashboard",restrictToLoggedinUserOnly,dashboardRoute);
 
-app.listen(PORT, () => console.log(`Server Starter at localhost:${PORT} !!`));
+app.listen(PORT, () => console.log(`Server Starter at ${PORT} !!`));
