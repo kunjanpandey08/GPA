@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Semester <%= semester %></title>
-    <link rel="stylesheet" href="/public/styles.css">
+    
 </head>
 <body>
-<div class="container">
-    <div style="margin-bottom: 1em;">
-        <form action="/" method="get" style="display:inline;">
+<div>
+    <div>
+    <form action="/" method="get">
             <button type="submit">Go to Dashboard</button>
         </form>
     </div>
-    <div style="margin-bottom: 1em;">
-        <form action="/user/logout" method="post" style="display:inline; float:right;">
+    <div>
+    <form action="/user/logout" method="post">
             <button type="submit">Logout</button>
         </form>
     </div>
@@ -30,7 +30,7 @@
             </tr>
             <% subjects.forEach(function(subj) { %>
                 <tr>
-                    <form action="/dashboard/subject-update" method="post" style="display:inline;">
+                    <form action="/dashboard/subject-update" method="post">
                         <td>
                             <input type="hidden" name="subjectId" value="<%= subj._id %>">
                             <input type="text" name="Subject" value="<%= subj.Subject %>" required>
@@ -44,7 +44,7 @@
         </table>
     <% } %>
     <% if (numberOfSubjects) { %>
-        <form action="/dashboard/subject-count" method="post" style="margin-bottom:1em;">
+    <form action="/dashboard/subject-count" method="post">
             <input type="hidden" name="semester" value="<%= semester %>">
             <label>Update Number of Subjects</label>
             <input type="number" name="numberOfSubjects" value="<%= numberOfSubjects %>" min="1" required>

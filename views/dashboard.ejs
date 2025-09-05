@@ -4,17 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="/public/styles.css">
+    
 </head>
 <body>
-<div class="container">
-    <div style="margin-bottom: 1em;">
-        <form action="/" method="get" style="display:inline;">
+<div>
+    <div>
+    <form action="/" method="get">
             <button type="submit">Go to Dashboard</button>
         </form>
     </div>
-    <div style="margin-bottom: 1em;">
-        <form action="/user/logout" method="post" style="display:inline; float:right;">
+    <div>
+    <form action="/user/logout" method="post">
             <button type="submit">Logout</button>
         </form>
     </div>
@@ -31,7 +31,7 @@
         </form>
         <% } %>
         <% if (locals.semesterCount) { %>
-            <form action="/dashboard/semester" method="post" style="margin-bottom:1em;">
+            <form action="/dashboard/semester" method="post">
                 <label>Update Semester Count</label>
                 <input type="number" name="semesterCount" value="<%= semesterCount %>" min="1" required>
                 <button type="submit">Update</button>
