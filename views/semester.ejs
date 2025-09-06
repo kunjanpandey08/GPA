@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/public/styles.css">
 </head>
 <body>
+    <% var flag = 0 %>
     <!-- navbar -->
     <div class="">
         <nav>
@@ -106,8 +107,12 @@
                 <label>Credit</label>
                 <input type="number" name="credit<%= index+1 %>">
             </div>
+            <% flag = 1 %>
             <% } %>
-            <button class="samelinebtn">Submit</button>
+
+            <% if (flag===1) { %>
+                <button class="samelinebtn">Submit</button>
+            <% } %>
         </form>
     </div>
     <% } %>
