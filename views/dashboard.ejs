@@ -51,6 +51,7 @@
         <div class="sameline">
         <!-- update semester count -->
         <form action="/dashboard/semester" method="post">
+             <input type="hidden" name="cgpa" value="<%= cgpa %>">
              <label for="">Update Semester Count</label>
              <input type="number" name="semesterCount" value="<%= semesterCount %>" min="1" required>
              <button type="submit" class="samelinebtn">Update</button>

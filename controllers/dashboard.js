@@ -6,6 +6,7 @@ const gpa = require("../models/gpa");
 async function handleGenerateSemesters(req, res) {
     const semesterCount = Number(req.body.semesterCount);
     const userId = req.user && req.user._id;
+    const cgpa = req.body.cgpa;
     if (!userId) {
         return res.status(401).send("User not authenticated");
     }
@@ -17,6 +18,7 @@ async function handleGenerateSemesters(req, res) {
     );
     return res.render("dashboard", {
         semesterCount: semesterCount,
+        cgpa:cgpa,
     });
 }
 
