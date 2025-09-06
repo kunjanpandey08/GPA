@@ -4,24 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Semester <%= semester %></title>
-    
+    <link rel="stylesheet" href="/public/styles.css">
 </head>
 <body>
-<div>
-    <div>
-    <form action="/" method="get">
-            <button type="submit">Go to Dashboard</button>
-        </form>
+    <!-- navbar -->
+    <div class="">
+        <nav>
+            <!-- goto dashboard -->
+             <!-- logout -->
+              <ul>
+                <li>
+                    <form action="/" method="get">
+                        <button type="submit" class="btn">Dashboard</button>
+                    </form>
+                </li>
+                <li>
+                    <form action="/user/logout" method="post">
+                        <button type="submit" class="btn">logout</button>
+                    </form>
+                </li>
+              </ul>
+        </nav>
     </div>
-    <div>
-    <form action="/user/logout" method="post">
-            <button type="submit">Logout</button>
-        </form>
+
+
+    <div class="container">
+        <h1>Semester  <%= semester %></h1>
     </div>
-    <h1>Semester <%= semester %></h1>
+
     <% if (subjects && subjects.length > 0) { %>
-        <h2>Subjects for Semester <%= semester %></h2>
-        <table border="1" cellpadding="5" cellspacing="0">
+    <div class="container">
+        <div>
+            <table>
             <tr>
                 <th>Subject</th>
                 <th>Grade</th>
@@ -29,41 +43,61 @@
                 <th>Edit</th>
             </tr>
             <% subjects.forEach(function(subj) { %>
-                <tr>
-                    <form action="/dashboard/subject-update" method="post">
+            <tr>
+                <form action="/dashboard/subject-update" method="post">
                         <td>
                             <input type="hidden" name="subjectId" value="<%= subj._id %>">
-                            <input type="text" name="Subject" value="<%= subj.Subject %>" required>
+                            <input type="text" name="Subject" value="<%= subj._id %>" required>
                         </td>
                         <td><input type="text" name="Grade" value="<%= subj.Grade %>" required></td>
                         <td><input type="number" name="Credit" value="<%= subj.Credit %>" required></td>
-                        <td><button type="submit">Update</button></td>
+                        <td><button type="submit" class="samelinebtn">Update</button></td>
                     </form>
                 </tr>
             <% }); %>
-        </table>
+            </table>
+        </div>
+    </div>
     <% } %>
+
+
     <% if (numberOfSubjects) { %>
-    <form action="/dashboard/subject-count" method="post">
-            <input type="hidden" name="semester" value="<%= semester %>">
-            <label>Update Number of Subjects</label>
-            <input type="number" name="numberOfSubjects" value="<%= numberOfSubjects %>" min="1" required>
-            <button type="submit">Update</button>
-        </form>
-    <% } %>
-    <% if (locals.showNumberOfSubjectsForm===true) { %>
+    <div class="container">
         <form action="/dashboard/subject-count" method="post">
             <input type="hidden" name="semester" value="<%= semester %>">
-            <label>Enter Number of Subjects for Semester <%= semester %></label>
-            <input type="number" name="numberOfSubjects" placeholder="1">
-            <button>Submit</button>
+            <table>
+                <tr>
+                    <td><label>Update Number of Subjects</label></td>
+                    <td><input type="number" name="numberOfSubjects" value="<%= numberOfSubjects %>" min="1" required></td>
+                    <td><button class="samelinebtn" type="submit">Update</button></td>
+                </tr>
+            </table>
         </form>
+    </div>
     <% } %>
+
+    <% if (locals.showNumberOfSubjectsForm===true) { %>
+    <div class="container">
+        <form action="/dashboard/subject-count" method="post">
+            <input type="hidden" name="semester" value="<%= semester %>">
+            
+            <table>
+                <tr>
+                    <td><label>Enter Number of Subjects for Semester <%= semester %></label></td>
+                    <td><input type="number" name="numberOfSubjects" placeholder="1"></td>
+                    <td><button class="samelinebtn">Submit</button></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <% } %>
+
     <% if (locals.subjectsSubmitted===false) { %>
+    <div class="container">
         <form action="/dashboard/subjects" method="post">
-        <input type="hidden" name="semester" value="<%= semester  %>">
-        <input type="hidden" name="numberOfSubjects" value="<%= numberOfSubjects %>">
-        <% for( let index = 0; index < locals.numberOfSubjects; index++ ) { %>
+            <input type="hidden" name="semester" value="<%= semester  %>">
+            <input type="hidden" name="numberOfSubjects" value="<%= numberOfSubjects %>">
+            <% for( let index = 0; index < locals.numberOfSubjects; index++ ) { %>
             <div>
                 <label>Subject</label>
                 <input type="text" name="subject<%= index+1 %>">
@@ -72,11 +106,12 @@
                 <label>Credit</label>
                 <input type="number" name="credit<%= index+1 %>">
             </div>
-        <% } %>
-        <button>Submit</button>
-    </form>
+            <% } %>
+            <button class="samelinebtn">Submit</button>
+        </form>
+    </div>
     <% } %>
-<% if (subjectsSubmitted === true ) { %>
+    <% if (subjectsSubmitted === true ) { %>
     <script>
         // Calculate GPA in the browser
         const subjects = <%- JSON.stringify(subjects) %>;
@@ -96,14 +131,15 @@
             document.getElementById('semesterCredit').value = totalCredits;
         });
     </script>
-    <h3>Your GPA for Semester <%= semester %>: <span id="gpa-value"></span></h3>
-    <form action="/dashboard/semester/gpa" method="post">
+    <div class="container">
+        <h3>Your GPA for Semester <%= semester %>: <span id="gpa-value"></span></h3>
+        <form action="/dashboard/semester/gpa" method="post">
         <input type="hidden" name="semester" value="<%= semester %>">
         <input type="hidden" name="Gpa" id="gpa-input" value="">
         <input type="hidden" name="semesterCredit" id="semesterCredit" value="">
-        <button type="submit">Save GPA</button>
+        <button class="samelinebtn" type="submit">Save GPA</button>
     </form>
-<% } %>
-</div>
+    </div>
+    <% } %>
 </body>
 </html>
