@@ -48,7 +48,7 @@
                 <form action="/dashboard/subject-update" method="post">
                         <td>
                             <input type="hidden" name="subjectId" value="<%= subj._id %>">
-                            <input type="text" name="Subject" value="<%= subj._id %>" required>
+                            <input type="text" name="Subject" value="<%= subj.Subject %>" required>
                         </td>
                         <td><input type="text" name="Grade" value="<%= subj.Grade %>" required></td>
                         <td><input type="number" name="Credit" value="<%= subj.Credit %>" required></td>
